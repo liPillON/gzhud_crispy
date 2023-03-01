@@ -1,0 +1,23 @@
+//crispy: BigRedNumbers
+gzcFNT_STT
+{
+	TEMPLATE gzcSTT%02d
+}
+
+//crispy: AmmoCounters/WeaponSlots (Gold)
+gzcFNT_STY
+{
+	TEMPLATE gzcSTY%02d
+}
+
+//crispy: AmmoCounters/WeaponSlots (Gray)
+gzcFNT_STG
+{
+	TEMPLATE gzcSTG%02d
+}
+
+//crispy: LevelInfo
+gzcFNT_IDX
+{
+	TEMPLATE gzcIDX%02d
+}

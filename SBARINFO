@@ -1,0 +1,135 @@
+// reference: https://zdoom.org/wiki/SBARINFO
+// stock definition: $PROGDIR/gzdoom.pk3/sbarinfo/doom.txt
+
+// sets the status bar to the specified game
+// valid games are Doom, Heretic, Hexen, Strife, and None.
+base DOOM;
+
+// setting this to 0 (ZERO) will tell GZDoom to use a fullscreen viewport
+// so the normal statusbar will be drawn without using GRNROCK flats as borders
+height 0;
+
+// if true, continues drawing the border where the status bar is normally placed
+// using this will remove the HOM. If false, the border is not drawn behind the status bar
+CompleteBorder true;
+
+// monospaces all fonts to the specified character of their font
+// alignment changes the position of off size characters within their spacing
+MonospaceFonts true, "0", center;
+
+// keep "resolution 320, 200;" to let the hud be affected by GZDoom's scaling just like the stock StatusBar is
+// when in game, to avoid any pixel-scaling distortion, I would then suggest to either:
+//  - execute "hud_AspectScale true; hud_scale 6; vid_ScaleToHeight 1440"
+//  - execute "hud_AspectScale true; hud_scale 3; vid_ScaleToHeight 720"
+resolution 320, 200;
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// standard StatusBar, used in the automap screen
+// we define it as EMPTY, so only stats and mapname will be displayed
+StatusBar AutoMap {}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// standard StatusBar and InventoryBar, used when ScreenBlocks<=10
+// we leave both commented, so GZDoom will provide the stock resources
+//StatusBar Inventory {}
+//StatusBar Normal {}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// FullScreen InventoryBar
+// provided in case a mod makes use of it
+StatusBar InventoryFullscreen, FullscreenOffsets
+{
+	DrawInventoryBar DOOM, AlwaysShowCounter, NoArtiBox, 1, gzcFNT_STY, -40, -61, -13, -39, untranslated;
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// FullScreen HUD, used when ScreenBlocks=11
+// this is where the magic happens ;)
+StatusBar Fullscreen, FullscreenOffsets
+{
+	//InventoryItem
+	DrawSelectedInventory AlwaysShowCounter, gzcFNT_STY, -40, -61, -13, -39, untranslated;
+
+	//ammo
+	DrawImage "gzcAMMO", 8, -9;
+	UsesSecondaryAmmo {
+		//current ammo
+		DrawNumber 3, gzcFNT_STT, untranslated, ammo1, DrawShadow(0,0), 44, -29;
+		//current weapon
+		DrawNumber 3, gzcFNT_STY, untranslated, ammo2, 44, -17;
+	} else UsesAmmo {
+		//current weapon
+		DrawNumber 3, gzcFNT_STT, untranslated, ammo1, DrawShadow(0,0), 44, -29;
+	} else {
+		//melee
+		//DrawImage WeaponIcon, 24, -20, center, 38, 14;
+		inInventory PowerStrength {
+			drawimage "PSTRA0", 24, -20, center, 22, 14;
+		}
+	}
+
+	//health
+	DrawImage "gzcHLTH", 55, -9;
+	DrawNumber 3, gzcFNT_STT, untranslated, health, DrawShadow(0,0), 90, -29;
+	DrawImage "gzcPRCT", 90, -29;
+
+	//weapon slots
+	DrawImage "gzcARMS", 109, -9;
+	DrawSwitchableImage WeaponSlot 2, "gzcSTG50", "gzcSTY50", 111, -28;
+	DrawSwitchableImage WeaponSlot 3, "gzcSTG51", "gzcSTY51", 121, -28;
+	DrawSwitchableImage WeaponSlot 4, "gzcSTG52", "gzcSTY52", 131, -28;
+	DrawSwitchableImage WeaponSlot 5, "gzcSTG53", "gzcSTY53", 111, -18;
+	DrawSwitchableImage WeaponSlot 6, "gzcSTG54", "gzcSTY54", 121, -18;
+	DrawSwitchableImage WeaponSlot 7, "gzcSTG55", "gzcSTY55", 131, -18;
+
+	//armor
+	DrawImage "gzcARMR", -132, -9;
+	DrawNumber 3, gzcFNT_STT, untranslated, armor, DrawShadow(0,0), -99, -29;
+	DrawImage "gzcPRCT", -99, -29;
+
+	//keys
+	DrawSwitchableImage KeySlot 2 && 5, "NullImage", "STKEYS0", "STKEYS3", "STKEYS6", -81, -29; //blu
+	DrawSwitchableImage KeySlot 3 && 6, "NullImage", "STKEYS1", "STKEYS4", "STKEYS7", -81, -20; //ylw
+	DrawSwitchableImage KeySlot 1 && 4, "NullImage", "STKEYS2", "STKEYS5", "STKEYS8", -81, -11;  //red
+
+	//ammo tally (only for stock doomplayer class)
+	DrawImage "gzcTLLY", -66, -27;
+	PlayerType DoomPlayer {
+		PlayerClass Marine {
+			DrawNumber 3, gzcFNT_STY, untranslated, ammo Clip, -32, -27;
+			DrawNumber 3, gzcFNT_STY, untranslated, ammo Shell, -32, -21;
+			DrawNumber 3, gzcFNT_STY, untranslated, ammo RocketAmmo, -32, -15;
+			DrawNumber 3, gzcFNT_STY, untranslated, ammo Cell, -32, -9;
+			DrawNumber 3, gzcFNT_STY, untranslated, ammoCapacity Clip, -6, -27;
+			DrawNumber 3, gzcFNT_STY, untranslated, ammoCapacity Shell, -6, -21;
+			DrawNumber 3, gzcFNT_STY, untranslated, ammoCapacity RocketAmmo, -6, -15;
+			DrawNumber 3, gzcFNT_STY, untranslated, ammoCapacity Cell, -6, -9;
+		}
+	}
+
+	ifCvarInt gzcHUD_LevelInfo, 1, equal {
+		//kills
+		DrawNumber 4, gzcFNT_IDX, gzcCLR_BLK, kills, -32, 3;
+		DrawString gzcFNT_IDX, gzcCLR_BLK, "/", -27, 3;
+		DrawNumber 4, gzcFNT_IDX, gzcCLR_BLK, monsters, -11, 3;
+		DrawString gzcFNT_IDX, gzcCLR_DRK, "K", -3, 3;
+		//items
+		DrawNumber 4, gzcFNT_IDX, gzcCLR_BLK, items, -32, 11;
+		DrawString gzcFNT_IDX, gzcCLR_BLK, "/", -27, 11;
+		DrawNumber 4, gzcFNT_IDX, gzcCLR_BLK, totalItems, -11, 11;
+		DrawString gzcFNT_IDX, gzcCLR_DRK, "I", -3, 11;
+		//secrets
+		DrawNumber 4, gzcFNT_IDX, gzcCLR_BLK, secrets, -32, 19;
+		DrawString gzcFNT_IDX, gzcCLR_BLK, "/", -27, 19;
+		DrawNumber 4, gzcFNT_IDX, gzcCLR_BLK, totalSecrets, -11, 19;
+		DrawString gzcFNT_IDX, gzcCLR_DRK, "S", -3, 19;
+	}
+}
