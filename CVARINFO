@@ -1,1 +1,2 @@
 user bool gzcHUD_LevelInfo = false;
+user bool gzcHUD_ModernStyle = false;

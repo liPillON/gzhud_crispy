@@ -45,7 +45,7 @@ StatusBar AutoMap {}
 // provided in case a mod makes use of it
 StatusBar InventoryFullscreen, FullscreenOffsets
 {
-	DrawInventoryBar DOOM, AlwaysShowCounter, NoArtiBox, 1, gzcFNT_STY, -40, -61, -13, -39, untranslated;
+	DrawInventoryBar DOOM, AlwaysShowCounter, NoArtiBox, 1, gzcFNT_STY, -36, -61, -9, -39, gzcCLR_GRY;
 }
 
 
@@ -56,64 +56,116 @@ StatusBar InventoryFullscreen, FullscreenOffsets
 StatusBar Fullscreen, FullscreenOffsets
 {
 	//InventoryItem
-	DrawSelectedInventory AlwaysShowCounter, gzcFNT_STY, -40, -61, -13, -39, untranslated;
+	DrawSelectedInventory AlwaysShowCounter, gzcFNT_STY, -36, -61, -9, -39, gzcCLR_GRY;
 
-	//ammo
-	DrawImage "gzcAMMO", 8, -9;
-	UsesSecondaryAmmo {
-		//current ammo
-		DrawNumber 3, gzcFNT_STT, untranslated, ammo1, DrawShadow(0,0), 44, -29;
-		//current weapon
-		DrawNumber 3, gzcFNT_STY, untranslated, ammo2, 44, -17;
-	} else UsesAmmo {
-		//current weapon
-		DrawNumber 3, gzcFNT_STT, untranslated, ammo1, DrawShadow(0,0), 44, -29;
-	} else {
-		//melee
-		//DrawImage WeaponIcon, 24, -20, center, 38, 14;
-		inInventory PowerStrength {
-			drawimage "PSTRA0", 24, -20, center, 22, 14;
+	ifCvarInt gzcHUD_ModernStyle, 0, equal {
+		//ammo
+		DrawImage "gzcAMMO", 8, -9;
+		UsesSecondaryAmmo {
+			//current ammo
+			DrawNumber 3, gzcFNT_STT, untranslated, ammo1, DrawShadow(0,0), 44, -29;
+			//current weapon
+			DrawNumber 3, gzcFNT_STY, untranslated, ammo2, 44, -17;
+		} else UsesAmmo {
+			//current weapon
+			DrawNumber 3, gzcFNT_STT, untranslated, ammo1, DrawShadow(0,0), 44, -29;
+		} else {
+			//melee
+			//DrawImage WeaponIcon, 24, -20, center, 38, 14;
+			inInventory PowerStrength {
+				drawimage "PSTRA0", 24, -20, center, 22, 14;
+			}
 		}
-	}
 
-	//health
-	DrawImage "gzcHLTH", 55, -9;
-	DrawNumber 3, gzcFNT_STT, untranslated, health, DrawShadow(0,0), 90, -29;
-	DrawImage "gzcPRCT", 90, -29;
+		//health
+		DrawImage "gzcHLTH", 55, -9;
+		DrawNumber 3, gzcFNT_STT, untranslated, health, DrawShadow(0,0), 90, -29;
+		DrawImage "gzcPRCT", 90, -29;
 
-	//weapon slots
-	DrawImage "gzcARMS", 109, -9;
-	DrawSwitchableImage WeaponSlot 2, "gzcSTG50", "gzcSTY50", 111, -28;
-	DrawSwitchableImage WeaponSlot 3, "gzcSTG51", "gzcSTY51", 121, -28;
-	DrawSwitchableImage WeaponSlot 4, "gzcSTG52", "gzcSTY52", 131, -28;
-	DrawSwitchableImage WeaponSlot 5, "gzcSTG53", "gzcSTY53", 111, -18;
-	DrawSwitchableImage WeaponSlot 6, "gzcSTG54", "gzcSTY54", 121, -18;
-	DrawSwitchableImage WeaponSlot 7, "gzcSTG55", "gzcSTY55", 131, -18;
+		//weapon slots
+		DrawImage "gzcARMS", 109, -9;
+		DrawSwitchableImage WeaponSlot 2, "gzcSTG50", "gzcSTY50", 111, -28;
+		DrawSwitchableImage WeaponSlot 3, "gzcSTG51", "gzcSTY51", 121, -28;
+		DrawSwitchableImage WeaponSlot 4, "gzcSTG52", "gzcSTY52", 131, -28;
+		DrawSwitchableImage WeaponSlot 5, "gzcSTG53", "gzcSTY53", 111, -18;
+		DrawSwitchableImage WeaponSlot 6, "gzcSTG54", "gzcSTY54", 121, -18;
+		DrawSwitchableImage WeaponSlot 7, "gzcSTG55", "gzcSTY55", 131, -18;
 
-	//armor
-	DrawImage "gzcARMR", -132, -9;
-	DrawNumber 3, gzcFNT_STT, untranslated, armor, DrawShadow(0,0), -99, -29;
-	DrawImage "gzcPRCT", -99, -29;
+		//armor
+		DrawImage "gzcARMR", -132, -9;
+		DrawNumber 3, gzcFNT_STT, untranslated, armor, DrawShadow(0,0), -99, -29;
+		DrawImage "gzcPRCT", -99, -29;
 
-	//keys
-	DrawSwitchableImage KeySlot 2 && 5, "NullImage", "STKEYS0", "STKEYS3", "STKEYS6", -81, -29; //blu
-	DrawSwitchableImage KeySlot 3 && 6, "NullImage", "STKEYS1", "STKEYS4", "STKEYS7", -81, -20; //ylw
-	DrawSwitchableImage KeySlot 1 && 4, "NullImage", "STKEYS2", "STKEYS5", "STKEYS8", -81, -11;  //red
+		//keys
+		DrawSwitchableImage KeySlot 2 && 5, "NullImage", "STKEYS0", "STKEYS3", "STKEYS6", -81, -29; //blu
+		DrawSwitchableImage KeySlot 3 && 6, "NullImage", "STKEYS1", "STKEYS4", "STKEYS7", -81, -20; //ylw
+		DrawSwitchableImage KeySlot 1 && 4, "NullImage", "STKEYS2", "STKEYS5", "STKEYS8", -81, -11;  //red
 
-	//ammo tally (only for stock doomplayer class)
-	DrawImage "gzcTLLY", -66, -27;
-	PlayerType DoomPlayer {
-		PlayerClass Marine {
-			DrawNumber 3, gzcFNT_STY, untranslated, ammo Clip, -32, -27;
-			DrawNumber 3, gzcFNT_STY, untranslated, ammo Shell, -32, -21;
-			DrawNumber 3, gzcFNT_STY, untranslated, ammo RocketAmmo, -32, -15;
-			DrawNumber 3, gzcFNT_STY, untranslated, ammo Cell, -32, -9;
-			DrawNumber 3, gzcFNT_STY, untranslated, ammoCapacity Clip, -6, -27;
-			DrawNumber 3, gzcFNT_STY, untranslated, ammoCapacity Shell, -6, -21;
-			DrawNumber 3, gzcFNT_STY, untranslated, ammoCapacity RocketAmmo, -6, -15;
-			DrawNumber 3, gzcFNT_STY, untranslated, ammoCapacity Cell, -6, -9;
+		//ammo tally (only for stock doomplayer class)
+		DrawImage "gzcTLLY", -66, -27;
+		PlayerType DoomPlayer {
+			PlayerClass Marine {
+				DrawNumber 3, gzcFNT_STY, untranslated, ammo Clip, -32, -27;
+				DrawNumber 3, gzcFNT_STY, untranslated, ammo Shell, -32, -21;
+				DrawNumber 3, gzcFNT_STY, untranslated, ammo RocketAmmo, -32, -15;
+				DrawNumber 3, gzcFNT_STY, untranslated, ammo Cell, -32, -9;
+				DrawNumber 3, gzcFNT_STY, untranslated, ammoCapacity Clip, -6, -27;
+				DrawNumber 3, gzcFNT_STY, untranslated, ammoCapacity Shell, -6, -21;
+				DrawNumber 3, gzcFNT_STY, untranslated, ammoCapacity RocketAmmo, -6, -15;
+				DrawNumber 3, gzcFNT_STY, untranslated, ammoCapacity Cell, -6, -9;
+			}
 		}
-	}
+
+	} // Classic Style
+
+
+	ifCvarInt gzcHUD_ModernStyle, 1, equal {
+		//health
+		DrawImage "gzcHLTH", 4, -9;
+		DrawNumber 3, gzcFNT_STT, untranslated, health, DrawShadow(0,0), 45, -29;
+
+		//armor
+		DrawImage "gzcARMR", 58, -9;
+		DrawNumber 3, gzcFNT_STT, untranslated, armor, DrawShadow(0,0), 96, -29;
+
+		//keys
+		DrawSwitchableImage KeySlot 2 && 5, "NullImage", "STKEYS0", "STKEYS3", "STKEYS6", 103, -29; //blu
+		DrawSwitchableImage KeySlot 3 && 6, "NullImage", "STKEYS1", "STKEYS4", "STKEYS7", 103, -20; //ylw
+		DrawSwitchableImage KeySlot 1 && 4, "NullImage", "STKEYS2", "STKEYS5", "STKEYS8", 103, -11;  //red
+
+		//ammo
+		UsesSecondaryAmmo {
+			//current ammo
+			DrawImage "gzcCLIP", -120, -9;
+			DrawNumber 3, gzcFNT_STT, untranslated, ammo1, DrawShadow(0,0), -96, -29;
+			//current weapon
+			DrawImage "gzcAMMO", -79, -9;
+			DrawNumber 3, gzcFNT_STT, untranslated, ammo2, DrawShadow(0,0), -45, -29;
+		} else UsesAmmo {
+			//current weapon
+			DrawImage "gzcAMMO", -79, -9;
+			DrawNumber 3, gzcFNT_STT, untranslated, ammo1, DrawShadow(0,0), -45, -29;
+		} else {
+			//melee
+			DrawImage "gzcMLEE", -81, -9;
+			inInventory PowerStrength {
+				DrawImage "PSTRA0", -64, -20, center, 22, 14;
+			} else {
+				DrawImage WeaponIcon, -64, -20, center, 38, 14;
+			}
+		}
+
+		//weapon slots
+		DrawImage "gzcARMS", -35, -9;
+		DrawSwitchableImage WeaponSlot 2, "gzcSTG50", "gzcSTY50", -33, -28;
+		DrawSwitchableImage WeaponSlot 3, "gzcSTG51", "gzcSTY51", -23, -28;
+		DrawSwitchableImage WeaponSlot 4, "gzcSTG52", "gzcSTY52", -13, -28;
+		DrawSwitchableImage WeaponSlot 5, "gzcSTG53", "gzcSTY53", -33, -18;
+		DrawSwitchableImage WeaponSlot 6, "gzcSTG54", "gzcSTY54", -23, -18;
+		DrawSwitchableImage WeaponSlot 7, "gzcSTG55", "gzcSTY55", -13, -18;
+
+	} // Modern Style
+
 
 	ifCvarInt gzcHUD_LevelInfo, 1, equal {
 		//kills

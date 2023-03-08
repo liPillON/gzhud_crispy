@@ -8,6 +8,7 @@ IndexFont replacement taken from [here](https://github.com/JNechaevsky/inter-doo
 
 
 Features:
+- Optional "Modern" style ([screenshot](https://raw.githubusercontent.com/liPillON/gzhud_crispy/main/MODERN.png))
 - Palette-independent PNG graphics
 - UsesAmmo/UsesSecondaryAmmo support
 - InventoryBar/SelectedInventory support
