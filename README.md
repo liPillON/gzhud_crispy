@@ -7,7 +7,7 @@ IndexFont replacement taken from [here](https://github.com/JNechaevsky/inter-doo
 ![README](https://raw.githubusercontent.com/liPillON/gzhud_crispy/main/README.png)
 
 
-Features:
+## Features:
 - Optional "Modern" style ([screenshot](https://raw.githubusercontent.com/liPillON/gzhud_crispy/main/MODERN.png))
 - Palette-independent PNG graphics
 - UsesAmmo/UsesSecondaryAmmo support
@@ -16,12 +16,12 @@ Features:
 - hidden StatusBar in automap
 
 
-Limitations:
+## Limitations:
 - the Slot for the current weapon is not higlighted
 - the Ammo Tally widget supports only the default PlayerType/PlayerClass
 
 
-Downloads:
+## Downloads:
 - [this](https://github.com/liPillON/gzhud_crispy/releases/latest) is the latest release.
 - [this](https://github.com/liPillON/gzhud_crispy/archive/refs/heads/main.zip) is the current repository snapshot.
 
